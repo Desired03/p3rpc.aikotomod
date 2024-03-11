@@ -1,0 +1,51 @@
+{
+  "ModId": "p3rpc.aikotomod",
+  "ModName": "Aikoto Mod",
+  "ModAuthor": "desvstvyy",
+  "ModVersion": "1.1.0",
+  "ModDescription": "Restores Aikoto content.",
+  "ModDll": "",
+  "ModIcon": "aikoto.png",
+  "ModR2RManagedDll32": "",
+  "ModR2RManagedDll64": "",
+  "ModNativeDll32": "",
+  "ModNativeDll64": "",
+  "Tags": [],
+  "CanUnload": null,
+  "HasExports": null,
+  "IsLibrary": false,
+  "ReleaseMetadataFileName": "p3rpc.aikotomod.ReleaseMetadata.json",
+  "PluginData": {
+    "GitHubDependencies": {
+      "IdToConfigMap": {
+        "p3rpc.UE4SS.Reloaded": {
+          "Config": {
+            "UserName": "Desired03",
+            "RepositoryName": "p3rpc.UE4SS.Reloaded",
+            "UseReleaseTag": true,
+            "AssetFileName": "Mod.zip"
+          },
+          "ReleaseMetadataName": "p3rpc.UE4SS.Reloaded.ReleaseMetadata.json"
+        },
+        "reloaded.sharedlib.hooks": {
+          "Config": {
+            "UserName": "Sewer56",
+            "RepositoryName": "Reloaded.SharedLib.Hooks.ReloadedII",
+            "UseReleaseTag": true,
+            "AssetFileName": "reloaded.sharedlib.hooks.zip"
+          },
+          "ReleaseMetadataName": "Sewer56.Update.ReleaseMetadata.json"
+        }
+      }
+    }
+  },
+  "IsUniversalMod": false,
+  "ModDependencies": [
+    "p3rpc.UE4SS.Reloaded"
+  ],
+  "OptionalDependencies": [],
+  "SupportedAppId": [
+    "p3r.exe"
+  ],
+  "ProjectUrl": ""
+}

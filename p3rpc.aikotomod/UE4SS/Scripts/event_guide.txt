@@ -1,0 +1,74 @@
+This mod works by detecting whenever the LevelSequencePlayer starts playing from a frame, 
+then intercepting select frames to execute our own code.
+LevelSequences in P3R generally pause after each dialogue, and play when advancing dialogue.
+We can skip significant frames in the default LevelSequence by jumping to frames after them.
+(e.g.: jump to the frame before the next dialogue)
+
+However, implementing any delays (with ExecuteWithDelay()) does not work well with fastforwarding,
+and there are often race condition issues when playing animations and setting transforms.
+Hopefully in the future we can edit the LevelSequence file directly!
+
+LevelSequences by default run at 30 FPS. Dividing the frame number by 30 will give you the time in seconds.
+In the .uasset file for LevelSequences, the frame number is multiplied by 800.
+
+
+AtlEvtPlayObject
+=========
+Handles event starting and ending. We use this to detect when the sequence starts playing.
+
+
+LevelSequencePlayer
+=========
+Master of the LevelSequence. Handles playing.
+
+Play()
+---------
+Resumes from current frame.
+
+Pause()
+---------
+Pauses at the current frame.
+
+JumpToSeconds()
+---------
+Moves to the given time (in seconds). Does not execute frame events before this time.
+
+PlayToSeconds()
+---------
+Moves to the given time (in seconds), executing frame events before this time.
+
+
+AppCharacterComp
+=========
+This class handles a lot of blueprint stuff used in sequences. Mostly to do with animations.
+
+PlayAnim_DefaultSlot()
+---------
+Takes an AnimSequence, returns an AnimMontage and then plays it to DefaultSlot.
+
+PlayFaceAnimation()
+---------
+Plays an expression on the actor's face using the FaceAnimID. You can find these IDs in FModel or by object dumping with UE4SS.
+
+PauseAnim()
+---------
+Pauses the given AnimMontage.
+
+
+BPAtlEvtActorComp
+=========
+Generally event-specific blueprint class for actors.
+
+SpawnHandwritingAttachedDefaultParam()
+---------
+Spawns handwriting (a comic effect, like exclamation marks) over the actor's head. Uses IDs.
+
+
+SkeletalMeshComponent
+=========
+The skeleton of an actor. Use the K2_ functions to move/rotate the actor.
+
+
+CineCameraComponent
+=========
+Scene's camera. Use the K2_ functions to move/rotate the camera.
