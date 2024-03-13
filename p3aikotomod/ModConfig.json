@@ -1,8 +1,8 @@
 {
-  "ModId": "p3rpc.aikotomod",
+  "ModId": "p3aikotomod",
   "ModName": "Aikoto Mod",
   "ModAuthor": "desvstvyy",
-  "ModVersion": "1.1.0",
+  "ModVersion": "1.1.1",
   "ModDescription": "Restores Aikoto content.",
   "ModDll": "",
   "ModIcon": "aikoto.png",
@@ -14,8 +14,14 @@
   "CanUnload": null,
   "HasExports": null,
   "IsLibrary": false,
-  "ReleaseMetadataFileName": "p3rpc.aikotomod.ReleaseMetadata.json",
+  "ReleaseMetadataFileName": "p3aikotomod.ReleaseMetadata.json",
   "PluginData": {
+    "GitHubRelease": {
+      "UserName": "Desired03",
+      "RepositoryName": "p3aikotomod",
+      "UseReleaseTag": true,
+      "AssetFileName": "Mod.zip"
+    },
     "GitHubDependencies": {
       "IdToConfigMap": {
         "p3rpc.UE4SS.Reloaded": {
@@ -37,6 +43,10 @@
           "ReleaseMetadataName": "Sewer56.Update.ReleaseMetadata.json"
         }
       }
+    },
+    "GameBanana": {
+      "ItemType": "Mod",
+      "ItemId": 499200
     }
   },
   "IsUniversalMod": false,

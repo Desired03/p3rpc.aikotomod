@@ -10,33 +10,50 @@ local Events = {
     ["LevelSequencePlayer /Game/Xrd777/Events/Cinema/Event_Main_200_150_C/LV_Event_Main_200_150_C.LV_Event_Main_200_150_C:PersistentLevel.LS_Event_Main_200_150_C.AnimationPlayer"] = require("Event_Main_200_150_C"),
 }
 
+local LSPlayer
 local HOOKED_Sequence = false
+local PlayPreId, PlayPostId
+local FinishPreId, FinishPostId
 
-NotifyOnNewObject("/Script/xrd777.AtlEvtPlayObject", function()
-    if HOOKED_Sequence then
+function OnPlayEventSequencer(self)
+    if not (LSPlayer and LSPlayer:IsValid()) then
         return
     end
-    HOOKED_Sequence = true
 
-    RegisterHook("/Script/xrd777.AtlEvtPlayObject:OnPlayEventSequencer", function(self)
-        local LSPlayer = FindFirstOf("LevelSequencePlayer")
-        if not (LSPlayer and LSPlayer:IsValid()) then
-            return
+    local frameNum = LSPlayer:GetCurrentTime().Time.FrameNumber.Value
+    if Sequencer.InterceptState > 0 then
+        print(string.format("[p3aikotomod] Currently intercepting! Current frame: %s (%.6f sec)\n", frameNum, frameNum / 30))
+        if Sequencer.InterceptState == 1 then
+            Sequencer.InterceptState = 0
         end
-        local frameNum = LSPlayer:GetCurrentTime().Time.FrameNumber.Value
-        if Sequencer.InterceptState > 0 then
-            print(string.format("[p3aikotomod] Currently intercepting! Current frame: %s (%.6f sec)\n", frameNum, frameNum / 30))
-            if Sequencer.InterceptState == 1 then
-                Sequencer.InterceptState = 0
-            end
-            return
-        end
+        return
+    end
 
-        local Frames = Events[LSPlayer:GetFullName()]
-        if Frames and Frames[frameNum] then
-            Frames[frameNum](Sequencer)
+    local Frames = Events[LSPlayer:GetFullName()]
+    if Frames and Frames[frameNum] then
+        Frames[frameNum](Sequencer)
+    end
+end
+
+function OnFinishedEventSequencer(self)
+    if HOOKED_Sequence then
+        HOOKED_Sequence = false
+        -- Unregistering will mitigate hitching (game thread HATES Lua)
+        UnregisterHook("/Script/xrd777.AtlEvtPlayObject:OnPlayEventSequencer", PlayPreId, PlayPostId)
+        UnregisterHook("/Script/xrd777.AtlEvtPlayObject:OnFinishedEventSequencer", FinishPreId, FinishPostId)
+    end
+end
+
+
+NotifyOnNewObject("/Script/LevelSequence.LevelSequencePlayer", function(object)
+    if Events[object:GetFullName()] then
+        LSPlayer = object
+        if not HOOKED_Sequence then
+            HOOKED_Sequence = true
+            PlayPreId, PlayPostId = RegisterHook("/Script/xrd777.AtlEvtPlayObject:OnPlayEventSequencer", OnPlayEventSequencer)
+            FinishPreId, FinishPostId = RegisterHook("/Script/xrd777.AtlEvtPlayObject:OnFinishedEventSequencer", OnFinishedEventSequencer)
         end
-    end)
+    end
 end)
 
 -- Console commands for extrapolating scene data

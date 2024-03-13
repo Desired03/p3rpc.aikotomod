@@ -50,7 +50,7 @@ Frames[660] = function(Sequencer)
     local aegis_hug_montage = aegis_AppCharComp:PlayAnim_DefaultSlot(LoadAsset(PATH_aegis_rank9hugIntro), false, 0.1, 0.1, 1.0)
     local makoto_hug_montage = makoto_AppCharComp:PlayAnim_DefaultSlot(LoadAsset(PATH_makoto_rank9hugIntro), false, 0.1, 0.1, 1.0)
 
-    aegis_AppCharComp:PlayFaceAnimation(4, true, 0.4, 0.4, 1.0)
+    aegis_AppCharComp:PlayFaceAnimation(0, true, 0.4, 0.4, 1.0)
     makoto_AppCharComp:PlayFaceAnimation(1, true, 0.4, 0.4, 1.0)
 
     aegis_AtlEvtActor:SpawnHandwritingAttachedDefaultParam(6, true)
